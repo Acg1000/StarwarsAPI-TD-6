@@ -29,49 +29,38 @@ extension Endpoint {
 
 enum Starwars: Endpoint {
 //    case search(resource: StarwarsResource, id: Int?)
-    case people(id: Int?)
+    case character(id: Int?)
     case starships(id: Int?)
-    case planets(id: Int?)
+    case planets(id: Int)
 
     
     var base: String {
-        print("getting base")
         return "https://swapi.co"
+        
     }
     
     var path: String {
-        print("getting path")
         switch self {
-        case .people(let id):
+        case .character(let id):
             if let id = id {
-                return "/people/\(id)"
+                return "/api/people/\(id)"
                 
             } else {
-                return "/people"
+                return "/api/people"
 
             }
             
         case .planets(let id):
-            if let id = id {
-                print("Calling peopleid")
-
-                return "/api/planets/\(id)"
-                
-            } else {
-                print("calling people")
-
-                return "/api/planets"
-                
-            }
+            return "/api/planets/\(id)"
+            
         case .starships(let id):
             if let id = id {
-                return "/starships/\(id)"
+                return "/api/starships/\(id)"
                 
             } else {
-                return "/starships"
+                return "/api/starships"
                 
             }
-            
         }
     }
 }

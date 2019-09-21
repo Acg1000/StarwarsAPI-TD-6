@@ -12,45 +12,57 @@ class StarwarsAPIClient {
     
     let downloader = JSONDownloader()
     
-    
-    func getPlanets(completion: @escaping ([Planet], StarwarsError?) -> Void) {
-        let endpoint = Starwars.planets(id: nil)
+    func getCharacters(completion: @escaping ([Character], StarwarsError?) -> Void) {
+        let endpoint = Starwars.character(id: nil)
         
         preformRequest(with: endpoint) { results, error in
             guard let results = results else {
+                print("ERROR WITH RESULTS: Endpoint: \(endpoint.base + endpoint.path)")
                 completion([], error)
                 return
             }
+                        
+            let characters = results.compactMap { Character(json: $0) }
+//            print("characters: \(characters)")
             
-            let planets = results.flatMap { Planet(json: $0)}
-            
-            print(planets)
-            
-            completion(planets, nil)
-//            print("Results incoming")
-//            print(planets)
-//            print(planets.count)
+            completion(characters, nil)
         }
     }
     
-    func lookupPlanet(withId id: Int, completion: @escaping (Planet, StarwarsError?) -> Void) {
-        let endpoint = Starwars.planets(id: id)
+    func lookupPlanet(withURL url: String, completion: @escaping (Planet, StarwarsError?) -> Void) {
+        var id: Int = 0
+        
+        for char in url {
+            if char.isNumber {
+                if let number = Int(String(char)) {
+                    print(number)
+                    id = number
+                }
+            }
+        }
+        
+        let endpoint1 = Starwars.planets(id: id)
+        print("Looking up planet: \(endpoint1.request)")
+
+        
+        preformRequest(with: endpoint1) { results, error in
+            guard let results = results else {
+                print("ERRORrr WITH RESULTS: Endpoint: -\(endpoint1)-")
+                completion(Planet(name: "n/a"), error)
+                return
+            }
+            
+            print("plannet result: \(results)")
+            
+            let planetName = results.first
+            
+            print("RESULTS \(results)")
+            print("PLANET NAME: \(planetName)")
+            
+            
+            completion(Planet(name: "HAHAHHA"), nil)
+        }
     }
-    
-//    func getPerson(completion: @escaping ([Person], StarwarsError?) -> Void) {
-//        let endpoint = Starwars.people(id: nil)
-//        
-//        preformRequest(with: endpoint) { results, error in
-//            guard let results = results else {
-//                completion([], error)
-//                return
-//            }
-//
-//            print("Results incoming")
-//
-//        }
-//    }
-    
     
     
     

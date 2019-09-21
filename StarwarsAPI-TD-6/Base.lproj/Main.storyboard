@@ -28,7 +28,7 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="200" height="222"/>
                                                 <state key="normal" image="icon-character"/>
                                                 <connections>
-                                                    <segue destination="0C1-aq-CmQ" kind="show" id="Vsu-WG-ygz"/>
+                                                    <segue destination="0C1-aq-CmQ" kind="show" identifier="characterSegue" id="Vsu-WG-ygz"/>
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Characters" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WhZ-of-NFU">
@@ -300,6 +300,6 @@
         <image name="icon-vehicle" width="200" height="200"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="PFR-K1-PgD"/>
+        <segue reference="MvL-hO-QB1"/>
     </inferredMetricsTieBreakers>
 </document>

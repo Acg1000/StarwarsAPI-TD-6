@@ -10,10 +10,12 @@ import Foundation
 import UIKit
 
 class PersonDataSource: NSObject, UITableViewDataSource {
-    private var person: Person
+    private var person: Character
     let tableView: UITableView
+    
+    let client = StarwarsAPIClient()
 
-    init(person: Person, tableView: UITableView) {
+    init(person: Character, tableView: UITableView) {
         print("called init method")
         
         self.person = person
@@ -46,6 +48,7 @@ class PersonDataSource: NSObject, UITableViewDataSource {
             return normalAttributeCell
             
         case 1:
+            
             let viewModel = NormalCellViewModel(title: "Home", item: "TBD")
             normalAttributeCell.configure(with: viewModel)
             
@@ -76,7 +79,7 @@ class PersonDataSource: NSObject, UITableViewDataSource {
 }
 
 extension PersonDataSource {
-    func update(with person: Person) {
+    func update(with person: Character) {
         self.person = person
     }
 }
