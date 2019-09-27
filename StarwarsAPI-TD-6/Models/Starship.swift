@@ -1,5 +1,5 @@
 //
-//  Vehicles.swift
+//  SpaceShip.swift
 //  StarwarsAPI-TD-6
 //
 //  Created by Andrew Graves on 8/24/19.
@@ -8,37 +8,36 @@
 
 import Foundation
 
-class Vehicle {
+class Starship {
     let name: String
     let model: String
-    let vehicleClass: String
+    let starshipClass: String
     let manufacturer: String
-    let lengthInCM: String
     let costInCredits: String
+    let lengthInCM: String
     let crew: String
     
-    init(name: String, model: String, vehicleClass: String, manufacturer: String, costInCredits: String, length: String, crew: String) {
-        
+    init(name: String, model: String, starshipClass: String, manufacturer: String, costInCredits: String, length: String, crew: String) {
         self.name = name
         self.model = model
-        self.vehicleClass = vehicleClass
+        self.starshipClass = starshipClass
         self.manufacturer = manufacturer
-        self.lengthInCM = length
         self.costInCredits = costInCredits
+        self.lengthInCM = length
         self.crew = crew
         
     }
 }
 
-// MARK: JSON init
+// MARK: Json init
 
-extension Vehicle {
+extension Starship {
     convenience init?(json: [String: Any]) {
         
         struct Key {
             static let name = "name"
             static let model = "model"
-            static let vehicleClass = "vehicle_class"
+            static let starshipClass = "starship_class"
             static let manufacturer = "manufacturer"
             static let costInCredits = "cost_in_credits"
             static let length = "length"
@@ -48,21 +47,20 @@ extension Vehicle {
         
         guard let nameValue = json[Key.name] as? String,
             let modelValue = json[Key.model] as? String,
-            let vehicleClassValue = json[Key.vehicleClass] as? String,
+            let starshipClassValue = json[Key.starshipClass] as? String,
             let manufacturerValue = json[Key.manufacturer] as? String,
             let costInCreditsValue = json[Key.costInCredits] as? String,
             let lengthValue = json[Key.length] as? String,
             let crewValue = json[Key.crew] as? String
             else { return nil }
         
-        self.init(name: nameValue, model: modelValue, vehicleClass: vehicleClassValue, manufacturer: manufacturerValue, costInCredits: costInCreditsValue, length: lengthValue, crew: crewValue)
+        self.init(name: nameValue, model: modelValue, starshipClass: starshipClassValue, manufacturer: manufacturerValue, costInCredits: costInCreditsValue, length: lengthValue, crew: crewValue)
     }
 }
 
-
 // MARK: Object class conformance
 
-extension Vehicle: Object {
+extension Starship: Object {
     var title: String {
         return name
     }
@@ -72,7 +70,7 @@ extension Vehicle: Object {
     }
     
     var type: StarwarsResource {
-        return .vehicle
+        return .starship
     }
     
     var attribute1: String {
@@ -88,12 +86,10 @@ extension Vehicle: Object {
     }
     
     var attribute4: String {
-        return vehicleClass
+        return starshipClass
     }
     
     var attribute5: String {
         return crew
     }
-    
-    
 }

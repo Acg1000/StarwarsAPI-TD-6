@@ -10,46 +10,60 @@ import UIKit
 
 class InformationViewController: UIViewController, UITableViewDataSource, UIPickerViewDelegate , UIPickerViewDataSource {
     
-    var character: Character = {
-        return Character(name: "", birthYear: "", eyeColor: "", hairColor: "", height: 0, homeworld: "https://google.com" , url: "https://google.com")
+    // ==========================================
+    // MARK: Current Vars
+    // ==========================================
+    
+    // character varable stores the character currently on display
+    lazy var currentObject: Object = {
+        return Character(name: "", birthYear: "", eyeColor: "", hairColor: "", height: 0, homeworld: "", url: "")
     }()
     
-    var characters: [Character] = [] {
+    
+    // The homeplanet of the current character
+    var planet: Planet = {
+        return Planet(name: "")
+    }()
+    
+    
+    // Stores all of the characters that exist from the API
+    var currentObjects: [Object] = [] {
         didSet {
             picker.dataSource = self
             
         }
     }
     
-    var planet: Planet = {
-        return Planet(name: "")
-    }()
-
+    var navigationTitle: String = ""
     
+    
+    // Outlet connections
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var picker: UIPickerView!
     @IBOutlet weak var smallestLabel: UILabel!
     @IBOutlet weak var largestLabel: UILabel!
     @IBOutlet weak var informationTableView: UITableView!
     
-    
+    // Api Client
     let client = StarwarsAPIClient()
     
+    // MARK: View Did Load Method
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        informationTableView.dataSource = self
-        informationTableView.reloadData()
+        navigationController?.navigationBar.isHidden = false
+        navigationItem.title = navigationTitle
         
-        picker.delegate = self
-        picker.dataSource = self
-        
-        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        navigationController?.navigationBar.isHidden = true
+
     }
     
 
     // ==========================================
-    // MARK: Data Source for the TableView
+    // MARK: TableView Data Source
     // ==========================================
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -62,72 +76,99 @@ class InformationViewController: UIViewController, UITableViewDataSource, UIPick
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+        // I create two cells
+        // One thats designed to display information
         let normalAttributeCell = tableView.dequeueReusableCell(withIdentifier: NormalTableViewCell.reuseIdentifier, for: indexPath) as! NormalTableViewCell
+        
+        // One thats designed to display units that need to be converted between two measurement standards
         let convertableAttributeCell = tableView.dequeueReusableCell(withIdentifier: ConvertableUnitTableViewCell.reuseIdentifer, for: indexPath) as! ConvertableUnitTableViewCell
         
-        switch indexPath.row {
-        case 0:
-            let viewModel = NormalCellViewModel(title: "Born", item: character.birthYear)
-            normalAttributeCell.configure(with: viewModel)
-            
-            return normalAttributeCell
-            
-        case 1:
-            let viewModel = NormalCellViewModel(title: "Home", item: planet.name)
-            normalAttributeCell.configure(with: viewModel)
-            
-            return normalAttributeCell
-            
-        case 2:
-            let viewModel = ConvertableCellViewModel(title: "Height", item: character.height, convertedItem: 0)
-            convertableAttributeCell.configure(viewModel: viewModel)
-            
-            return convertableAttributeCell
-            
-        case 3:
-            let viewModel = NormalCellViewModel(title: "Eyes", item: character.eyeColor)
-            normalAttributeCell.configure(with: viewModel)
-            
-            return normalAttributeCell
-            
-        case 4:
-            let viewModel = NormalCellViewModel(title: "Hair", item: character.hairColor)
-            normalAttributeCell.configure(with: viewModel)
-            
-            return normalAttributeCell
-            
-        default:
-            fatalError()
+        
+        // Check to see if its a machene type or a character type
+        if currentObject.type == .character {
+            // Switch on the current row of the tableview
+
+            switch indexPath.row {
+                case 0:
+                    
+                    let viewModel = NormalCellViewModel(title: "Born", item: currentObject.attribute1)
+                    normalAttributeCell.configure(with: viewModel)
+                    
+                    return normalAttributeCell
+                    
+                case 1:
+                    let viewModel = NormalCellViewModel(title: "Home", item: currentObject.arrtibute2)
+                    normalAttributeCell.configure(with: viewModel)
+                    
+                    return normalAttributeCell
+                    
+                case 2:
+                    let viewModel = ConvertableCellViewModel(title: "Height", item: Double(currentObject.attribute3)!, unit: .centimeters, convertedUnit: .feet)
+                    convertableAttributeCell.configure(viewModel: viewModel)
+                    
+                    return convertableAttributeCell
+                    
+                case 3:
+                    let viewModel = NormalCellViewModel(title: "Eyes", item: currentObject.attribute4)
+                    normalAttributeCell.configure(with: viewModel)
+                    
+                    return normalAttributeCell
+                    
+                case 4:
+                    let viewModel = NormalCellViewModel(title: "Hair", item: currentObject.attribute5)
+                    normalAttributeCell.configure(with: viewModel)
+                    
+                    return normalAttributeCell
+                    
+                default:
+                    fatalError()
+                }
+        } else {
+            switch indexPath.row {
+                case 0:
+                    
+                    let viewModel = NormalCellViewModel(title: "Make", item: currentObject.attribute1)
+                    normalAttributeCell.configure(with: viewModel)
+                    
+                    return normalAttributeCell
+                    
+                case 1:
+                    
+                    let viewModel = ConvertableCellViewModel(title: "Cost", item: Double(currentObject.arrtibute2) ?? 0, unit: .credits, convertedUnit: .USD)
+                    convertableAttributeCell.configure(viewModel: viewModel)
+                    
+                    return convertableAttributeCell
+                    
+                case 2:
+                    let viewModel = ConvertableCellViewModel(title: "Length", item: Double(currentObject.attribute3) ?? 0, unit: .centimeters, convertedUnit: .feet)
+                    convertableAttributeCell.configure(viewModel: viewModel)
+                    
+                    return convertableAttributeCell
+                    
+                case 3:
+                    let viewModel = NormalCellViewModel(title: "Class", item: currentObject.attribute4)
+                    normalAttributeCell.configure(with: viewModel)
+                    
+                    return normalAttributeCell
+                    
+                case 4:
+                    let viewModel = NormalCellViewModel(title: "Crew", item: currentObject.attribute5)
+                    normalAttributeCell.configure(with: viewModel)
+                    
+                    return normalAttributeCell
+                    
+                default:
+                    fatalError()
+                }
+            }
         }
-    }
     
-    func setBiggest() {
-        var biggest = characters[0]
         
-        for character in characters {
-            if character.height > biggest.height {
-                biggest = character
-            }
-        }
         
-        largestLabel.text = biggest.name
-    }
-        
-    func setSmallest() {
-        var smallest = characters[0]
-        
-        for character in characters {
-            if character.height < smallest.height {
-                smallest = character
-            }
-        }
-        
-        smallestLabel.text = smallest.name
-    }
     
     
     // ==========================================
-    // MARK: Data Source for the Picker
+    // MARK: Picker Data Source
     // ==========================================
     
     
@@ -139,36 +180,67 @@ class InformationViewController: UIViewController, UITableViewDataSource, UIPick
     
     // The number of rows of data
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return characters.count
+        return currentObjects.count
     }
     
     // The data to return fopr the row and component (column) that's being passed in
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return characters[row].name
+        return currentObjects[row].title
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         print("Current Row: \(row)")
-        titleLabel.text = characters[row].name
-        character = characters[row]
+        titleLabel.text = currentObjects[row].title
+        currentObject = currentObjects[row]
         
-        client.lookupPlanet(withURL: characters[row].homeworld) { planet, error in
-            self.planet = planet
-        }
+//        // When
+//        client.lookupPlanet(withURL: currentObjects[row].homeworld) { planet, error in
+//            self.planet = planet
+//            self.informationTableView.reloadData()
+//
+//        }
         
         informationTableView.reloadData()
         
     }
     
+    // ==========================================
+    // MARK: MISC Functions
+    // ==========================================
     
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
+    // sets the item with the largest units
+    func setBiggest() {
+        var biggest = currentObjects[0]
+       
+        for object in currentObjects {
+            if object.sizeAttribute > biggest.sizeAttribute {
+                biggest = object
+            }
+        }
+       
+       largestLabel.text = biggest.title
+    }
+       
+    // sets the item with the smallest units
+    func setSmallest() {
+        var smallest = currentObjects[0]
+       
+        for object in currentObjects {
+            if object.sizeAttribute < smallest.sizeAttribute {
+                smallest = object
+            }
+        }
+       
+       smallestLabel.text = smallest.title
+    }
     
+    func firstTimeSetup() {
+        
+        informationTableView.dataSource = self
+        informationTableView.reloadData()
+        
+        picker.delegate = self
+        picker.dataSource = self
+        
+    }
 }

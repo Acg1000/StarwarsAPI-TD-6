@@ -32,6 +32,7 @@ enum Starwars: Endpoint {
     case character(id: Int?)
     case starships(id: Int?)
     case planets(id: Int)
+    case vehicles(id: Int?)
 
     
     var base: String {
@@ -60,6 +61,13 @@ enum Starwars: Endpoint {
             } else {
                 return "/api/starships"
                 
+            }
+            
+        case .vehicles(let id):
+            if let id = id {
+                return "/api/vehicles/\(id)"
+            } else {
+                return "/api/vehicles"
             }
         }
     }

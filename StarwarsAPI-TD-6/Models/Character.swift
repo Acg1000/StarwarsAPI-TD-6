@@ -56,3 +56,37 @@ extension Character {
         self.init(name: nameValue, birthYear: birthYearValue, eyeColor: eyeColorValue, hairColor: hairColorValue, height: heightValue, homeworld: homeworldURL, url: urlValue) 
     }
 }
+
+extension Character: Object {
+    var title: String {
+        return name
+    }
+    
+    var sizeAttribute: Double {
+        return height
+    }
+    
+    var type: StarwarsResource {
+        return .character
+    }
+    
+    var attribute1: String {
+        return birthYear
+    }
+    
+    var arrtibute2: String {
+        return homeworld
+    }
+    
+    var attribute3: String {
+        return "\(height)"
+    }
+    
+    var attribute4: String {
+        return eyeColor
+    }
+    
+    var attribute5: String {
+        return hairColor
+    }
+}

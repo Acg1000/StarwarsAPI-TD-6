@@ -8,18 +8,18 @@
 
 import Foundation
 
-enum StarwarsResource {
-    case people
-    case starships
-    case planets
+enum StarwarsResource: String {
+    case character
+    case starship
+    case vehicle
 }
 
 extension StarwarsResource: CustomStringConvertible {
     var description: String {
         switch self {
-        case .people: return "people"
-        case .starships: return "starships"
-        case .planets: return "planets"
+        case .character: return "people"
+        case .starship: return "starship"
+        case .vehicle: return "vehicle"
             
         }
     }

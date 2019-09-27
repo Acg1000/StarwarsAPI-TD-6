@@ -17,6 +17,8 @@ class Planet {
     }
 }
 
+// MARK: JSON init
+
 extension Planet {
     convenience init?(json: [String: Any]) {
         

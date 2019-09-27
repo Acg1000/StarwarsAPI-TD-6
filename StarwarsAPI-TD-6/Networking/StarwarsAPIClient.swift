@@ -17,7 +17,7 @@ class StarwarsAPIClient {
         
         preformRequest(with: endpoint) { results, error in
             guard let results = results else {
-                print("ERROR WITH RESULTS: Endpoint: \(endpoint.base + endpoint.path)")
+                print("ERROR WITH CHARACTER RESULTS: Endpoint: \(endpoint.base + endpoint.path)")
                 completion([], error)
                 return
             }
@@ -29,6 +29,43 @@ class StarwarsAPIClient {
         }
     }
     
+    func getVehicles(completion: @escaping ([Vehicle], StarwarsError?) -> Void) {
+        let endpoint = Starwars.vehicles(id: nil)
+        
+        preformRequest(with: endpoint) { results, error in
+            guard let results = results else {
+                print("ERROR WITH VEHICLE RESULTS: \(endpoint.base + endpoint.path)")
+                completion([], error)
+                return
+            }
+           
+            let vehicles = results.compactMap { Vehicle(json: $0) }
+            
+            completion(vehicles, nil)
+        }
+    }
+    
+    func getStarships(completion: @escaping ([Starship], StarwarsError?) -> Void) {
+        let endpoint = Starwars.starships(id: nil)
+        
+        preformRequest(with: endpoint) { results, error in
+            guard let results = results else {
+                print("ERROR WITH VEHICLE RESULTS: \(endpoint.base + endpoint.path)")
+                completion([], error)
+                return
+            }
+            
+            print("results: \(results)")
+            let starships = results.compactMap { Starship(json: $0) }
+            print("MAPPING:  \(results.map { Starship(json: $0)})")
+           
+            print("Starships: \(starships)")
+           
+            completion(starships, nil)
+        }
+    }
+    
+    
     func lookupPlanet(withURL url: String, completion: @escaping (Planet, StarwarsError?) -> Void) {
         var id: Int = 0
         
@@ -36,18 +73,22 @@ class StarwarsAPIClient {
             if char.isNumber {
                 if let number = Int(String(char)) {
                     print(number)
+                    print("ID Before: \(id)")
                     id = number
+                    print("ID After: \(id)")
+
                 }
             }
         }
         
-        let endpoint1 = Starwars.planets(id: id)
-        print("Looking up planet: \(endpoint1.request)")
+        let endpoint = Starwars.planets(id: id)
+        print("Looking up planet: \(endpoint.request)")
 
         
-        preformRequest(with: endpoint1) { results, error in
+        preformRequest(with: endpoint) { results, error in
+            print("Results: \(results)")
             guard let results = results else {
-                print("ERRORrr WITH RESULTS: Endpoint: -\(endpoint1)-")
+                print("ERROR WITH RESULTS: Endpoint: -\(endpoint)-")
                 completion(Planet(name: "n/a"), error)
                 return
             }
