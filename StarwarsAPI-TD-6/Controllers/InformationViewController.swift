@@ -51,12 +51,16 @@ class InformationViewController: UIViewController, UITableViewDataSource, UIPick
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Setting the navigation title to what button the user hit
         navigationController?.navigationBar.isHidden = false
         navigationItem.title = navigationTitle
         
     }
     
+    // If the back button is clicked...
     override func viewWillDisappear(_ animated: Bool) {
+        
+        // make the navigation controller hide
         navigationController?.navigationBar.isHidden = true
 
     }
@@ -87,6 +91,7 @@ class InformationViewController: UIViewController, UITableViewDataSource, UIPick
         // Check to see if its a machene type or a character type
         if currentObject.type == .character {
             // Switch on the current row of the tableview
+            // The title of every row is already predetermined and all we do here is take the title we want to assign and the value and create a ViewModel instance for that combination
 
             switch indexPath.row {
                 case 0:
@@ -234,6 +239,7 @@ class InformationViewController: UIViewController, UITableViewDataSource, UIPick
        smallestLabel.text = smallest.title
     }
     
+    // some misc functions that run when this view is displayed
     func firstTimeSetup() {
         
         informationTableView.dataSource = self

@@ -36,15 +36,17 @@ class ConvertableUnitTableViewCell: UITableViewCell {
 
         titleLabel.text = viewModel.title
         
+        // if the item is pretty much 0, then it does not exist
         if viewModel.item.isLess(than: 0.01){
             itemLabel.text = "n/a"
 
         }
         
+        // if the units are in meters then display them with an "m" after the number
         if viewModel.unit == .meters {
             itemLabel.text = String(format: "%.2fm", viewModel.item)
 
-            
+        // Otherwise, if they are in feet then display with ft afterwards
         } else if viewModel.unit == .feet {
             itemLabel.text = String(format: "%.2fft", viewModel.item)
 

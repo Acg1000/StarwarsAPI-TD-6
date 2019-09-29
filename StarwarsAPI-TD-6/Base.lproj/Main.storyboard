@@ -16,7 +16,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="SNv-uc-utw">
+                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="SNv-uc-utw">
                                 <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="2kQ-KP-NPN">
@@ -24,9 +24,6 @@
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Wb-0G-bY9">
                                                 <rect key="frame" x="0.0" y="0.0" width="200" height="222"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="222" id="Krn-bI-9SH"/>
-                                                </constraints>
                                                 <state key="normal" image="icon-character"/>
                                                 <connections>
                                                     <segue destination="0C1-aq-CmQ" kind="show" identifier="characterSegue" id="Vsu-WG-ygz"/>
@@ -39,20 +36,12 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="2kQ-KP-NPN" secondAttribute="height" multiplier="100:129" id="V3v-Dm-i6S"/>
-                                            <constraint firstAttribute="bottom" secondItem="WhZ-of-NFU" secondAttribute="bottom" id="qwi-Gh-CB4"/>
-                                            <constraint firstItem="WhZ-of-NFU" firstAttribute="top" secondItem="8Wb-0G-bY9" secondAttribute="bottom" id="xS8-Vc-QEq"/>
-                                        </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="eIp-UO-YRz">
                                         <rect key="frame" x="107" y="258" width="200" height="258"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c4N-5R-qGG">
                                                 <rect key="frame" x="0.0" y="0.0" width="200" height="222"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="222" id="eeN-xd-MU5"/>
-                                                </constraints>
                                                 <state key="normal" image="icon-vehicle"/>
                                                 <connections>
                                                     <segue destination="0C1-aq-CmQ" kind="show" identifier="vehicleSegue" id="MvL-hO-QB1"/>
@@ -65,20 +54,12 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
-                                        <constraints>
-                                            <constraint firstItem="pS2-uf-5WD" firstAttribute="top" secondItem="c4N-5R-qGG" secondAttribute="bottom" id="2s2-eS-BPX"/>
-                                            <constraint firstAttribute="width" secondItem="eIp-UO-YRz" secondAttribute="height" multiplier="100:129" id="fRZ-He-cPm"/>
-                                            <constraint firstAttribute="bottom" secondItem="pS2-uf-5WD" secondAttribute="bottom" id="sXp-YG-C9e"/>
-                                        </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="bkO-0C-UAb">
                                         <rect key="frame" x="107" y="516" width="200" height="258"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DWK-dy-FbL">
                                                 <rect key="frame" x="0.0" y="0.0" width="200" height="222"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="222" id="SlH-CS-tTd"/>
-                                                </constraints>
                                                 <state key="normal" image="icon-starship"/>
                                                 <connections>
                                                     <segue destination="0C1-aq-CmQ" kind="show" identifier="starshipSegue" id="PFR-K1-PgD"/>
@@ -91,29 +72,16 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
-                                        <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="XFp-Pt-owI" secondAttribute="bottom" id="fCR-w6-lau"/>
-                                            <constraint firstAttribute="width" secondItem="bkO-0C-UAb" secondAttribute="height" multiplier="100:129" id="rfp-vP-HeQ"/>
-                                            <constraint firstItem="XFp-Pt-owI" firstAttribute="top" secondItem="DWK-dy-FbL" secondAttribute="bottom" id="sri-YJ-cgc"/>
-                                        </constraints>
                                     </stackView>
                                 </subviews>
-                                <constraints>
-                                    <constraint firstItem="2kQ-KP-NPN" firstAttribute="leading" secondItem="SNv-uc-utw" secondAttribute="leading" id="HMv-rg-lWk"/>
-                                    <constraint firstAttribute="trailing" secondItem="bkO-0C-UAb" secondAttribute="trailing" id="U6L-1D-sLe"/>
-                                    <constraint firstAttribute="trailing" secondItem="eIp-UO-YRz" secondAttribute="trailing" id="bUg-J2-I4y"/>
-                                    <constraint firstAttribute="trailing" secondItem="2kQ-KP-NPN" secondAttribute="trailing" id="fhR-tI-ZDU"/>
-                                    <constraint firstItem="bkO-0C-UAb" firstAttribute="leading" secondItem="SNv-uc-utw" secondAttribute="leading" id="g83-9C-dyQ"/>
-                                    <constraint firstItem="eIp-UO-YRz" firstAttribute="leading" secondItem="SNv-uc-utw" secondAttribute="leading" id="tzd-ri-KE0"/>
-                                </constraints>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" red="0.098039215686274508" green="0.11764705882352941" blue="0.12549019607843137" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="SNv-uc-utw" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="3BK-tI-0ze"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="SNv-uc-utw" secondAttribute="trailing" id="WPj-Yp-wCT"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="SNv-uc-utw" secondAttribute="bottom" id="cU3-jM-m9b"/>
-                            <constraint firstItem="SNv-uc-utw" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="wSL-bz-2M2"/>
+                            <constraint firstItem="SNv-uc-utw" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Ws9-WU-1GO"/>
+                            <constraint firstItem="SNv-uc-utw" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="hpv-8j-eu2"/>
+                            <constraint firstItem="SNv-uc-utw" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="iRh-ix-Xku"/>
+                            <constraint firstItem="SNv-uc-utw" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="r6p-cA-AmI"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>

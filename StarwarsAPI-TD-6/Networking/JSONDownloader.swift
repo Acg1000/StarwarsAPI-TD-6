@@ -5,6 +5,7 @@
 //  Created by Andrew Graves on 8/25/19.
 //  Copyright © 2019 Andrew Graves. All rights reserved.
 //
+// Function: Download the JSON and parse errors if there is a problem with any connection on either side
 
 import Foundation
 

@@ -30,9 +30,4 @@ class NormalTableViewCell: UITableViewCell {
         titleLabel.text = viewModel.title
         itemLabel.text = viewModel.item
     }
-    
-    //THIS IS WHERE I AM
-    // CURRENTLY IM HAVING ISSUES WITH THE VIEWMODEL AND ASSIGNING. I NEED TO JUST MAKE TWO VIEWMODELS...
-    // ONE THAT OFFERS THE CONVERTABLE AND ONE WITHOUT
-
 }

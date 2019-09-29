@@ -5,6 +5,7 @@
 //  Created by Andrew Graves on 8/26/19.
 //  Copyright © 2019 Andrew Graves. All rights reserved.
 //
+// Function: Provides the methods needed to get information from the API
 
 import Foundation
 
@@ -12,60 +13,85 @@ class StarwarsAPIClient {
     
     let downloader = JSONDownloader()
     
+    // MARK: getCharacters
+    
+    // get characters method
     func getCharacters(completion: @escaping ([Character], StarwarsError?) -> Void) {
+        
+        // Create the endpoint and pass nil because we want all the characters
         let endpoint = Starwars.character(id: nil)
         
+        // Call the preform request function with the URL / endpoint that wejust created
         preformRequest(with: endpoint) { results, error in
+            
+            // When we get results back...
             guard let results = results else {
-                print("ERROR WITH CHARACTER RESULTS: Endpoint: \(endpoint.base + endpoint.path)")
+                // if they do not exist, then pass an error
+                
                 completion([], error)
                 return
             }
                         
+            // If they do then case / map them to the Character class and then pass through the completion handeler
             let characters = results.compactMap { Character(json: $0) }
-//            print("characters: \(characters)")
-            
             completion(characters, nil)
         }
     }
     
+    // MARK: getVehicles
+    
+    // get vehicles method
     func getVehicles(completion: @escaping ([Vehicle], StarwarsError?) -> Void) {
+        
+        // Create endpoint
         let endpoint = Starwars.vehicles(id: nil)
         
+        // Call the endpoint provided
         preformRequest(with: endpoint) { results, error in
+            
+            // when the results come back...
             guard let results = results else {
-                print("ERROR WITH VEHICLE RESULTS: \(endpoint.base + endpoint.path)")
+                // if the results don't exist...
+                
                 completion([], error)
                 return
             }
            
+            // If they do then cast / map them to the Vehivle class and then pass through the completion handeler
             let vehicles = results.compactMap { Vehicle(json: $0) }
             
             completion(vehicles, nil)
         }
     }
     
+    // MARK: getStarships
+    
+    // get starships method
     func getStarships(completion: @escaping ([Starship], StarwarsError?) -> Void) {
+        
+        // Create endpoint
         let endpoint = Starwars.starships(id: nil)
         
+        // Call the endpoint provided
         preformRequest(with: endpoint) { results, error in
+            
+            // when the results come back
             guard let results = results else {
-                print("ERROR WITH VEHICLE RESULTS: \(endpoint.base + endpoint.path)")
+                // If the results don't exist...
+
                 completion([], error)
                 return
             }
             
-            print("results: \(results)")
+            // If they do then cast / map them to the starship class and then pass through completion hendler
             let starships = results.compactMap { Starship(json: $0) }
-            print("MAPPING:  \(results.map { Starship(json: $0)})")
-           
-            print("Starships: \(starships)")
-           
             completion(starships, nil)
         }
     }
     
+    // MARK: lookupPlannet
     
+    // lookupPlannet method
     func lookupPlanet(withURL url: String, completion: @escaping (Planet, StarwarsError?) -> Void) {
         var id: Int = 0
         
@@ -86,7 +112,6 @@ class StarwarsAPIClient {
 
         
         preformRequest(with: endpoint) { results, error in
-            print("Results: \(results)")
             guard let results = results else {
                 print("ERROR WITH RESULTS: Endpoint: -\(endpoint)-")
                 completion(Planet(name: "n/a"), error)
@@ -110,9 +135,13 @@ class StarwarsAPIClient {
     
     typealias Results = [[String: Any]]
     
+    // MARK: Preform Request
     private func preformRequest(with endpoint: Endpoint, completion: @escaping(Results?, StarwarsError?) -> Void) {
         
+        // Create the task with the endpoint provided...
         let task = downloader.jsonTask(with: endpoint.request) {json, error in
+            
+            // Create the task in the background...
             DispatchQueue.main.async {
                 guard let json = json else {
                     completion(nil, error)

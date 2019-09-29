@@ -5,24 +5,9 @@
 //  Created by Andrew Graves on 9/13/19.
 //  Copyright © 2019 Andrew Graves. All rights reserved.
 //
+// Function: Model the convertable cell...
 
 import Foundation
-
-//struct ConvertableCellViewModel {
-//    let conversionType: StarwarsUnits
-//
-//    let title: String
-//    let item: Double
-//    var convertedItem = {
-//        if conversionType == nil {
-//            return
-//        }
-//    }
-//
-//    let unit: String
-//    let convertedUnit: String
-//
-//}
 
 class ConvertableCellViewModel {
     
