@@ -14,7 +14,7 @@ class Character {
     let eyeColor: String
     let hairColor: String
     let height: Double
-    let homeworld: String
+    var homeworld: String
     let url: String
 
     init(name: String, birthYear: String, eyeColor: String, hairColor: String, height: Double, homeworld: String, url: String) {
@@ -58,6 +58,8 @@ extension Character {
 }
 
 extension Character: Object {
+   
+    
     var title: String {
         return name
     }
@@ -75,7 +77,13 @@ extension Character: Object {
     }
     
     var arrtibute2: String {
-        return homeworld
+        get {
+            return homeworld
+
+        } set  {
+            homeworld = newValue
+            
+        }
     }
     
     var attribute3: String {

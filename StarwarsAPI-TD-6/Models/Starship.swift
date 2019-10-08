@@ -78,7 +78,11 @@ extension Starship: Object {
     }
     
     var arrtibute2: String {
-        return costInCredits
+        get {
+            return costInCredits
+        } set {
+            
+        }
     }
     
     var attribute3: String {

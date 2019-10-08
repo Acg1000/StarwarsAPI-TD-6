@@ -79,8 +79,12 @@ extension Vehicle: Object {
         return manufacturer
     }
     
-    var arrtibute2: String {
-        return costInCredits
+   var arrtibute2: String {
+        get {
+            return costInCredits
+        } set {
+            
+        }
     }
     
     var attribute3: String {

@@ -20,13 +20,6 @@ class ViewController: UIViewController {
         navigationController?.navigationBar.isHidden = true
         print("AT THE MAIN VIEW CONTROLLER")
         
-        
-        // THIS IS THE FAULTY CALL... SOMTHING IS HAPPENING HERE
-        client.lookupPlanet(withURL: "https://swapi.co/api/planets/1/") { [weak self] planet, error in
-            print("Planet object: \(planet)")
-            print("Planet name: \(planet.name)")
-
-        }
     }
     
     // when a segue is clicked...
@@ -41,67 +34,24 @@ class ViewController: UIViewController {
             // Set the title of the navigation controller on the next page
             informationViewController.navigationTitle = "Characters"
             
-            // Call the client for the information
-            client.getCharacters() { [weak self] characters, error in
-                self?.objects = characters
-                
-                // Assign the info gotten to the different varables
-                informationViewController.currentObjects = characters
-                informationViewController.currentObject = characters[0]
-                informationViewController.titleLabel.text = characters[0].name
-                
-                // Run the functions to get the biggest and smallest items
-                informationViewController.setBiggest()
-                informationViewController.setSmallest()
-                
-                // Run some other setup things
-                informationViewController.firstTimeSetup()
-
-            }
+            informationViewController.getData(for: .character)
+            
+            
         } else if segue.identifier == "vehicleSegue" {
             
             // Set the title of the navigation controller on the next page
             informationViewController.navigationTitle = "Vehicles"
             
-            // Call the client for the information
-            client.getVehicles() { [weak self] vehicles, error in
-                self?.objects = vehicles
-                
-                // Assign the info gotten to the different varables
-                informationViewController.currentObjects = vehicles
-                informationViewController.currentObject = vehicles[0]
-                informationViewController.titleLabel.text = vehicles[0].name
-
-                // Run the functions to get the biggest and smallest items
-                informationViewController.setBiggest()
-                informationViewController.setSmallest()
-                
-                // Run some other setup things
-                informationViewController.firstTimeSetup()
-
-            }
+            informationViewController.getData(for: .vehicle)
+            
+            
         } else if segue.identifier == "starshipSegue" {
             
             // Set the title of the navigation controller on the next page
             informationViewController.navigationTitle = "Starships"
             
-            // Call the client for the information
-            client.getStarships() { [weak self] starships, error in
-                self?.objects = starships
-                
-                // Assign the info gotten to the different varables
-                informationViewController.currentObjects = starships
-                informationViewController.currentObject = starships[0]
-                informationViewController.titleLabel.text = starships[0].name
-
-                // Run the functions to get the biggest and smallest items
-                informationViewController.setBiggest()
-                informationViewController.setSmallest()
-                
-                // Run some other setup things
-                informationViewController.firstTimeSetup()
-
-            }
+            informationViewController.getData(for: .starship)
+            
         }
     }
 }

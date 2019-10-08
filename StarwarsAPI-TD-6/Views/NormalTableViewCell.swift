@@ -24,6 +24,10 @@ class NormalTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+        
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = UIColor(red: 0.098, green: 0.118, blue: 0.125, alpha: 1.00)
+        selectedBackgroundView = backgroundView
     }
     
     func configure(with viewModel: NormalCellViewModel) {

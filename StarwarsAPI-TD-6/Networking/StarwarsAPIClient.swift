@@ -34,7 +34,21 @@ class StarwarsAPIClient {
                         
             // If they do then case / map them to the Character class and then pass through the completion handeler
             let characters = results.compactMap { Character(json: $0) }
-            completion(characters, nil)
+            var counter = 0
+            
+            for character in characters {
+                self.lookupPlanet(withURL: character.arrtibute2) { planet, error in
+                    character.arrtibute2 = planet.name
+                    print("ATTRIBUTES: \(character.arrtibute2)")
+                    completion(characters, nil)
+                    counter += 1
+
+                }
+                if counter == characters.count {
+                    completion(characters, nil)
+
+                }
+            }
         }
     }
     
@@ -111,22 +125,21 @@ class StarwarsAPIClient {
         print("Looking up planet: \(endpoint.request)")
 
         
-        preformRequest(with: endpoint) { results, error in
-            guard let results = results else {
-                print("ERROR WITH RESULTS: Endpoint: -\(endpoint)-")
+        preformSingleRequest(with: endpoint) { result, error in
+
+            guard let result = result else {
+                print("ERROR WITH RESULTS: Endpoint: -\(endpoint)- \(error)")
                 completion(Planet(name: "n/a"), error)
                 return
             }
+                        
+            guard let planet = Planet(json: result) else {
+                completion(Planet(name: "n/a"), .jsonParsingFailure(messege: "results do not line up with planet class"))
+                return
+            }
             
-            print("plannet result: \(results)")
-            
-            let planetName = results.first
-            
-            print("RESULTS \(results)")
-            print("PLANET NAME: \(planetName)")
-            
-            
-            completion(Planet(name: "HAHAHHA"), nil)
+            print("PLANET NAME: \(planet.name)")
+            completion(planet, nil)
         }
     }
     
@@ -134,6 +147,7 @@ class StarwarsAPIClient {
     
     
     typealias Results = [[String: Any]]
+    typealias Result = [String: Any]
     
     // MARK: Preform Request
     private func preformRequest(with endpoint: Endpoint, completion: @escaping(Results?, StarwarsError?) -> Void) {
@@ -148,7 +162,30 @@ class StarwarsAPIClient {
                     return
                 }
                 
-                guard let results = json["results"] as? [[String: Any]] else {
+                guard let results = json["results"] as? Results else {
+                    completion(nil, .jsonParsingFailure(messege: "JSON data does not contain results"))
+                    return
+                }
+                
+                completion(results, nil)
+            }
+        }
+        
+        task.resume()
+    }
+    
+    private func preformSingleRequest(with endpoint: Endpoint, completion: @escaping(Result?, StarwarsError?) -> Void) {
+        
+        let task = downloader.jsonTask(with: endpoint.request) {json, error in
+            
+            // Create the task in the background
+            DispatchQueue.main.async {
+                guard let json = json else {
+                    completion(nil, error)
+                    return
+                }
+                
+                guard let results = json as? Result else {
                     completion(nil, .jsonParsingFailure(messege: "JSON data does not contain results"))
                     return
                 }

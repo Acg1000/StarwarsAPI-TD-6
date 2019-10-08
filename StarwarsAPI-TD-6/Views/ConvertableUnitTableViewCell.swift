@@ -29,6 +29,9 @@ class ConvertableUnitTableViewCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = UIColor(red: 0.098, green: 0.118, blue: 0.125, alpha: 1.00)
+        selectedBackgroundView = backgroundView
         // Configure the view for the selected state
     }
     
@@ -52,7 +55,7 @@ class ConvertableUnitTableViewCell: UITableViewCell {
 
             
         } else {
-//            itemLabel.text = String(format: "%.2f", viewModel.item)
+            
             itemLabel.text = String(viewModel.item.formatUsingAbbrevation())
 
         }
@@ -78,9 +81,7 @@ class ConvertableUnitTableViewCell: UITableViewCell {
             }
 
         } else {
-//            itemLabel.text = String(format: "%.2f", viewModel.item)
             itemLabel.text = String(viewModel.item.formatUsingAbbrevation())
-
 
         }
 

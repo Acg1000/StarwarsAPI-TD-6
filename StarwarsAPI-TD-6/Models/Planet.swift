@@ -27,10 +27,6 @@ extension Planet {
         
         }
         
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
-        
         guard let nameValue = json[Key.name] as? String
                 else { return nil }
         

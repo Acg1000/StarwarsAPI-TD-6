@@ -20,12 +20,6 @@ class InformationViewController: UIViewController, UITableViewDataSource, UIPick
     }()
     
     
-    // The homeplanet of the current character
-    var planet: Planet = {
-        return Planet(name: "")
-    }()
-    
-    
     // Stores all of the characters that exist from the API
     var currentObjects: [Object] = [] {
         didSet {
@@ -168,9 +162,6 @@ class InformationViewController: UIViewController, UITableViewDataSource, UIPick
             }
         }
     
-        
-        
-    
     
     // ==========================================
     // MARK: Picker Data Source
@@ -194,20 +185,80 @@ class InformationViewController: UIViewController, UITableViewDataSource, UIPick
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        print("Current Row: \(row)")
+        
+        for thing in currentObjects {
+            print("Thing 24: \(thing.arrtibute2)")
+        }
+        
+        
+        print(row)
         titleLabel.text = currentObjects[row].title
         currentObject = currentObjects[row]
-        
-//        // When
-//        client.lookupPlanet(withURL: currentObjects[row].homeworld) { planet, error in
-//            self.planet = planet
-//            self.informationTableView.reloadData()
-//
-//        }
-        
         informationTableView.reloadData()
         
+        for thing in currentObjects {
+            print("Thing 25: \(thing.arrtibute2)")
+        }
+        
     }
+    
+    // ==========================================
+    // MARK: API Calls
+    // ==========================================
+    
+    func getData(for type: StarwarsResource) {
+        switch type {
+        case .character:
+            client.getCharacters() { [weak self] characters, error in
+                
+                // Assign the info gotten to the different varables
+                self?.currentObject = characters[0]
+                self?.currentObjects = characters
+                self?.titleLabel.text = characters[0].name
+                
+                self?.setBiggest()
+                self?.setSmallest()
+
+                self?.refreshViews()
+                
+            }
+                
+            
+        case .starship:
+            client.getVehicles() { [weak self] vehicles, error in
+                
+                // Assign the info gotten to the different varables
+                self?.currentObject = vehicles[0]
+                self?.currentObjects = vehicles
+                self?.titleLabel.text = vehicles[0].name
+                
+                self?.setBiggest()
+                self?.setSmallest()
+                
+                self?.refreshViews()
+                
+            }
+            
+        case .vehicle:
+            client.getStarships() { [weak self] starships, error in
+                
+                // Assign the info gotten to the different variables
+                self?.currentObject = starships[0]
+                self?.currentObjects = starships
+                self?.titleLabel.text = starships[0].name
+                
+                self?.setBiggest()
+                self?.setSmallest()
+                                
+                self?.refreshViews()
+            }
+            
+           
+        }
+    }
+
+    
+    
     
     // ==========================================
     // MARK: MISC Functions
@@ -239,14 +290,10 @@ class InformationViewController: UIViewController, UITableViewDataSource, UIPick
        smallestLabel.text = smallest.title
     }
     
-    // some misc functions that run when this view is displayed
-    func firstTimeSetup() {
-        
+    func refreshViews() {
         informationTableView.dataSource = self
         informationTableView.reloadData()
-        
         picker.delegate = self
         picker.dataSource = self
-        
     }
 }
