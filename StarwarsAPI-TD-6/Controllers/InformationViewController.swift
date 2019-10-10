@@ -190,15 +190,10 @@ class InformationViewController: UIViewController, UITableViewDataSource, UIPick
             print("Thing 24: \(thing.arrtibute2)")
         }
         
-        
         print(row)
         titleLabel.text = currentObjects[row].title
         currentObject = currentObjects[row]
         informationTableView.reloadData()
-        
-        for thing in currentObjects {
-            print("Thing 25: \(thing.arrtibute2)")
-        }
         
     }
     

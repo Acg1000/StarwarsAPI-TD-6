@@ -94,6 +94,7 @@ class ConvertableUnitTableViewCell: UITableViewCell {
     }
     
     @IBAction func button2Pressed(_ sender: Any) {
+        
         if viewModel.unit == .meters {
             if viewModel.convertedItem.isLess(than: 0.01) {
                 itemLabel.text = "n/a"
@@ -104,10 +105,30 @@ class ConvertableUnitTableViewCell: UITableViewCell {
             }
 
         } else {
-//            itemLabel.text = String(format: "%.2f", viewModel.convertedItem)
-            itemLabel.text = String(viewModel.convertedItem.formatUsingAbbrevation())
+            
+            // Make a check to see if the conversion ratio exitst...
+            let moneyConversionRatio = viewModel.moneyConversionRatio
+            
+            if moneyConversionRatio == nil {
+                                
+                // Call an alert controller at the information view controller
+                let alertController = UIAlertController(title: "Enter Conversion Ratio", message: "Please enter the conversion ratio between USD and Galactic Credits as a percentage from Galactic Credits", preferredStyle: .alert)
+                
+                alertController.addTextField(configurationHandler: nil)
+                
+                alertController.addAction(UIAlertAction(title: "Submit", style: .default) { handler in
+                    
+//                    self.viewModel.setConversionRatio(to: alertController.textFields?[0].text)
+                    self.checkConversionRatio(alertController.textFields?.first?.text)
+                    self.itemLabel.text = String(self.viewModel.convertedItem.formatUsingAbbrevation())
+                })
+                
+                UIApplication.shared.keyWindow?.rootViewController?.present(alertController, animated: true, completion: nil)
+                
+            } else {
+                itemLabel.text = String(viewModel.convertedItem.formatUsingAbbrevation())
 
-
+            }
         }
         
         conversionButton2.isEnabled = false
@@ -115,6 +136,37 @@ class ConvertableUnitTableViewCell: UITableViewCell {
         
         conversionButton1.setTitleColor(.darkGray, for: .normal)
         conversionButton2.setTitleColor(.white, for: .normal)
+    }
+    
+    func checkConversionRatio(_ ratio: String?) {
+        guard let ratio = ratio else{
+            // There is nothing entered
+            
+            let alertController = UIAlertController(title: "No Conversion Ratio", message: "Please enter a valid INT conversion ratio", preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+            
+            UIApplication.shared.keyWindow?.rootViewController?.present(alertController, animated: true, completion: nil)
+            return
+        }
+        
+        if !ratio.isDouble {
+            // ratio is not a double
+            
+            let alertController = UIAlertController(title: "Invalid Conversion Ratio", message: "Please enter a valid INT conversion ratio", preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+            
+            UIApplication.shared.keyWindow?.rootViewController?.present(alertController, animated: true, completion: nil)
+        } else {
+            
+            if let ratioAsDouble = Double(ratio) {
+                viewModel.setConversionRatio(to: ratioAsDouble)
+
+            } else {
+                
+                fatalError()
+            }
+            
+        }
     }
 }
 

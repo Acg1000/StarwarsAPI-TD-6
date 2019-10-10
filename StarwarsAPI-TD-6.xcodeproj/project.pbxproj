@@ -21,6 +21,7 @@
 		FB09475E23134D1C00E1E5AC /* JSONDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB09475D23134D1C00E1E5AC /* JSONDownloader.swift */; };
 		FB09476123134D3200E1E5AC /* StarwarsError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB09476023134D3200E1E5AC /* StarwarsError.swift */; };
 		FB09476323143EDC00E1E5AC /* StarwarsAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB09476223143EDC00E1E5AC /* StarwarsAPIClient.swift */; };
+		FB155449234F9E7B007AFE65 /* ConversionRatioError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB155448234F9E7B007AFE65 /* ConversionRatioError.swift */; };
 		FB21B996232B0C5E006631F6 /* NormalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB21B995232B0C5E006631F6 /* NormalTableViewCell.swift */; };
 		FB21B998232B0D4F006631F6 /* ConvertableUnitTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB21B997232B0D4F006631F6 /* ConvertableUnitTableViewCell.swift */; };
 		FB21B99C232C1AD2006631F6 /* NormalCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB21B99B232C1AD2006631F6 /* NormalCellViewModel.swift */; };
@@ -47,6 +48,7 @@
 		FB09475D23134D1C00E1E5AC /* JSONDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDownloader.swift; sourceTree = "<group>"; };
 		FB09476023134D3200E1E5AC /* StarwarsError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarwarsError.swift; sourceTree = "<group>"; };
 		FB09476223143EDC00E1E5AC /* StarwarsAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarwarsAPIClient.swift; sourceTree = "<group>"; };
+		FB155448234F9E7B007AFE65 /* ConversionRatioError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionRatioError.swift; sourceTree = "<group>"; };
 		FB21B995232B0C5E006631F6 /* NormalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NormalTableViewCell.swift; sourceTree = "<group>"; };
 		FB21B997232B0D4F006631F6 /* ConvertableUnitTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvertableUnitTableViewCell.swift; sourceTree = "<group>"; };
 		FB21B99B232C1AD2006631F6 /* NormalCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NormalCellViewModel.swift; sourceTree = "<group>"; };
@@ -103,6 +105,7 @@
 		FB09474C2311EE1300E1E5AC /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				FB15544A234F9E81007AFE65 /* Errors */,
 				FB094757231344FC00E1E5AC /* Endpoint */,
 				FB09474D2311EE2A00E1E5AC /* Character.swift */,
 				FB09474F2311EE3700E1E5AC /* Starship.swift */,
@@ -131,6 +134,14 @@
 				FB09476223143EDC00E1E5AC /* StarwarsAPIClient.swift */,
 			);
 			path = Networking;
+			sourceTree = "<group>";
+		};
+		FB15544A234F9E81007AFE65 /* Errors */ = {
+			isa = PBXGroup;
+			children = (
+				FB155448234F9E7B007AFE65 /* ConversionRatioError.swift */,
+			);
+			path = Errors;
 			sourceTree = "<group>";
 		};
 		FBC857D42327619B005AD59A /* View Models */ = {
@@ -245,6 +256,7 @@
 				FB0947542311F85500E1E5AC /* Vehicle.swift in Sources */,
 				FB21B99C232C1AD2006631F6 /* NormalCellViewModel.swift in Sources */,
 				FB09476123134D3200E1E5AC /* StarwarsError.swift in Sources */,
+				FB155449234F9E7B007AFE65 /* ConversionRatioError.swift in Sources */,
 				FB0947502311EE3700E1E5AC /* Starship.swift in Sources */,
 				FB09473B2311E06200E1E5AC /* AppDelegate.swift in Sources */,
 				FB09476323143EDC00E1E5AC /* StarwarsAPIClient.swift in Sources */,
