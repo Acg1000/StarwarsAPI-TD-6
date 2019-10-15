@@ -14,7 +14,7 @@ class ConvertableCellViewModel {
     
     let title: String
     let item: Double
-    var convertedItem: Double
+    var convertedItem: Double?
     var unit: StarwarsUnits
     let convertedUnit: StarwarsUnits
     var moneyConversionRatio: Double?
@@ -25,21 +25,23 @@ class ConvertableCellViewModel {
         self.unit = unit
         self.moneyConversionRatio = nil
 
+        // if the cell's unit is in centimeters, like how the API returns the information, we know we need to convert to meters for display. Here we convert to meters and change the unit from cm to meters to keep track of that conversion. If its not in meters then we know it's in Galactic Credits so we don't need to convert.
         if unit == .centimeters {
             self.item = item / 100
             self.unit = .meters
+            
         } else {
             self.item = item
+            
         }
         
+        // The converted unit is the unit that we are going to be converting to when the button is pressed.
         self.convertedUnit = convertedUnit
         
+        // This code checks for the starting unit and the converted unit type to see what formula it needs to apply.
         if self.unit == .meters && convertedUnit == .feet {
             // convert from meters to feet
             self.convertedItem = self.item * 3.281
-            
-            print("Converted \(self.item) Meters to \(self.convertedItem)")
-
             
         } else if self.unit == .credits && convertedUnit == .USD {
             
@@ -49,43 +51,26 @@ class ConvertableCellViewModel {
 
             } else {
                 // ADD SOMTHING ELSE HERE TO DISPLAY ERROR TO USER
-                self.convertedItem = self.item / 100
+                self.convertedItem = nil
             }
             
         } else {
             self.convertedItem = 0
+            
         }
     }
     
     
-    
+    // This mutator function sets the conversion ratio for Galactic Credits to USD to what the user requests
     func setConversionRatio(to ratio: Double) {
+        self.moneyConversionRatio = ratio
+        self.convertedItem = self.item / self.moneyConversionRatio!
         
-//        guard let ratio = ratio else {
-//            // ratio is nil
-//            let alertController = UIAlertController(title: "No Conversion Ratio", message: "Please enter a valid INT conversion ratio", preferredStyle: .alert)
-//            alertController.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
-//
-//            UIApplication.shared.keyWindow?.rootViewController?.present(alertController, animated: true, completion: nil)
-//            return
-//
-//        }
-//
-//        // Check to make sure its an int
-//        if (!ratio.isDouble) {
-//            let alertController = UIAlertController(title: "Invalid Conversion Ratio", message: "Please enter a valid INT conversion ratio", preferredStyle: .alert)
-//            alertController.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
-//
-//            UIApplication.shared.keyWindow?.rootViewController?.present(alertController, animated: true, completion: nil)
-
-//        } else {
-            self.moneyConversionRatio = ratio
-            self.convertedItem = self.item / self.moneyConversionRatio!
-//        }
     }
 }
 
 
+// I extend the string method to add a little way to tell if a string can be converted to a double.
 extension String {
     var isDouble: Bool {
         return Double(self) != nil

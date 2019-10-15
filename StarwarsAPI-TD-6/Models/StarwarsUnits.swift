@@ -5,6 +5,7 @@
 //  Created by Andrew Graves on 9/24/19.
 //  Copyright © 2019 Andrew Graves. All rights reserved.
 //
+//  Function: Model the different units that can exist and be converted between.
 
 import Foundation
 

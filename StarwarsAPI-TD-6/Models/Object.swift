@@ -5,6 +5,7 @@
 //  Created by Andrew Graves on 9/23/19.
 //  Copyright © 2019 Andrew Graves. All rights reserved.
 //
+//  Function: Create a protocol that all objects have to conform to what makes it possible to assign their information to each cell in the tableview.
 
 import Foundation
 
@@ -21,5 +22,3 @@ protocol Object {
     var attribute5: String { get }
     
 }
-
-// WORK ON FIXING THE INFORMATION VIEW CONTROLLER

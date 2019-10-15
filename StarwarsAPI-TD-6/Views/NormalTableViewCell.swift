@@ -5,6 +5,7 @@
 //  Created by Andrew Graves on 9/12/19.
 //  Copyright © 2019 Andrew Graves. All rights reserved.
 //
+// Function: Take the information modeled by the NormalCellViewModel and assign it to the actual labels and buttons...
 
 import UIKit
 

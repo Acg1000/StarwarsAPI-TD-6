@@ -5,6 +5,7 @@
 //  Created by Andrew Graves on 8/25/19.
 //  Copyright © 2019 Andrew Graves. All rights reserved.
 //
+//  Function: Model the endpoints for the different paths that can be requested from the API
 
 import Foundation
 

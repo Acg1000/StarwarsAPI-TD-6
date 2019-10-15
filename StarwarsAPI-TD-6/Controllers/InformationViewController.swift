@@ -5,6 +5,7 @@
 //  Created by Andrew Graves on 9/13/19.
 //  Copyright © 2019 Andrew Graves. All rights reserved.
 //
+//  Function: ViewController for the information-displaying part of the app
 
 import UIKit
 
@@ -28,8 +29,8 @@ class InformationViewController: UIViewController, UITableViewDataSource, UIPick
         }
     }
     
+    // This is set and then used to change the Navigation Controller's title.
     var navigationTitle: String = ""
-    
     
     // Outlet connections
     @IBOutlet weak var titleLabel: UILabel!
@@ -54,7 +55,7 @@ class InformationViewController: UIViewController, UITableViewDataSource, UIPick
     // If the back button is clicked...
     override func viewWillDisappear(_ animated: Bool) {
         
-        // make the navigation controller hide
+        // make the navigation controller hide when we enter this view
         navigationController?.navigationBar.isHidden = true
 
     }
@@ -78,15 +79,16 @@ class InformationViewController: UIViewController, UITableViewDataSource, UIPick
         // One thats designed to display information
         let normalAttributeCell = tableView.dequeueReusableCell(withIdentifier: NormalTableViewCell.reuseIdentifier, for: indexPath) as! NormalTableViewCell
         
-        // One thats designed to display units that need to be converted between two measurement standards
+        // and one thats designed to display units that need to be converted between two measurement standards
         let convertableAttributeCell = tableView.dequeueReusableCell(withIdentifier: ConvertableUnitTableViewCell.reuseIdentifer, for: indexPath) as! ConvertableUnitTableViewCell
         
         
         // Check to see if its a machene type or a character type
         if currentObject.type == .character {
+            
             // Switch on the current row of the tableview
             // The title of every row is already predetermined and all we do here is take the title we want to assign and the value and create a ViewModel instance for that combination
-
+            // We know that the displayed attributes for the Character are different from the ones for the Vehicles and Starships so we are displaying different information and views depending on the type.
             switch indexPath.row {
                 case 0:
                     
@@ -122,6 +124,7 @@ class InformationViewController: UIViewController, UITableViewDataSource, UIPick
                 default:
                     fatalError()
                 }
+            
         } else {
             switch indexPath.row {
                 case 0:
@@ -186,13 +189,9 @@ class InformationViewController: UIViewController, UITableViewDataSource, UIPick
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
-        for thing in currentObjects {
-            print("Thing 24: \(thing.arrtibute2)")
-        }
-        
-        print(row)
-        titleLabel.text = currentObjects[row].title
+        // Change the labels and current object based on which item is currently in the picker.
         currentObject = currentObjects[row]
+        titleLabel.text = currentObject.title
         informationTableView.reloadData()
         
     }
@@ -201,6 +200,8 @@ class InformationViewController: UIViewController, UITableViewDataSource, UIPick
     // MARK: API Calls
     // ==========================================
     
+    // This is the function called in the previous activity
+    // It gets the data from the API and assigns it to the current object(s) variable(s)
     func getData(for type: StarwarsResource) {
         switch type {
         case .character:
@@ -285,6 +286,7 @@ class InformationViewController: UIViewController, UITableViewDataSource, UIPick
        smallestLabel.text = smallest.title
     }
     
+    // Just refreshes every view / datasource that exists in this view.
     func refreshViews() {
         informationTableView.dataSource = self
         informationTableView.reloadData()

@@ -5,6 +5,7 @@
 //  Created by Andrew Graves on 8/24/19.
 //  Copyright © 2019 Andrew Graves. All rights reserved.
 //
+//  Function: Model the Character
 
 import Foundation
 

@@ -5,6 +5,7 @@
 //  Created by Andrew Graves on 8/24/19.
 //  Copyright © 2019 Andrew Graves. All rights reserved.
 //
+//  Function: Starting View Controller
 
 import UIKit
 
@@ -18,7 +19,6 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         navigationController?.navigationBar.isHidden = true
-        print("AT THE MAIN VIEW CONTROLLER")
         
     }
     
