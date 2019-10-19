@@ -39,7 +39,6 @@ class StarwarsAPIClient {
             for character in characters {
                 self.lookupPlanet(withURL: character.arrtibute2) { planet, error in
                     character.arrtibute2 = planet.name
-                    print("ATTRIBUTES: \(character.arrtibute2)")
                     completion(characters, nil)
                     counter += 1
 
@@ -113,9 +112,7 @@ class StarwarsAPIClient {
             if char.isNumber {
                 if let number = Int(String(char)) {
                     print(number)
-                    print("ID Before: \(id)")
                     id = number
-                    print("ID After: \(id)")
 
                 }
             }
@@ -128,7 +125,6 @@ class StarwarsAPIClient {
         preformSingleRequest(with: endpoint) { result, error in
 
             guard let result = result else {
-                print("ERROR WITH RESULTS: Endpoint: -\(endpoint)- \(error)")
                 completion(Planet(name: "n/a"), error)
                 return
             }
@@ -138,7 +134,6 @@ class StarwarsAPIClient {
                 return
             }
             
-            print("PLANET NAME: \(planet.name)")
             completion(planet, nil)
         }
     }
