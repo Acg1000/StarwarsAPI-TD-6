@@ -9,7 +9,7 @@
 
 import Foundation
 
-enum StarwarsError {
+enum StarwarsError: Error {
     case requestFailed
     case jsonConversionFailure
     case invalidData

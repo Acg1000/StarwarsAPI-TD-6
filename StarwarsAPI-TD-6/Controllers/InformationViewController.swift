@@ -207,15 +207,35 @@ class InformationViewController: UIViewController, UITableViewDataSource, UIPick
         case .character:
             client.getCharacters() { [weak self] characters, error in
                 
-                // Assign the info gotten to the different varables
-                self?.currentObject = characters[0]
-                self?.currentObjects = characters
-                self?.titleLabel.text = characters[0].name
-                
-                self?.setBiggest()
-                self?.setSmallest()
+//                 Check for the error
+                if error != nil {
 
-                self?.refreshViews()
+                    switch error {
+                    case .requestFailed:
+                        self?.navigationController?.popViewController(animated: true)
+
+                        self?.displaySimpleAlertView(title: "Request Failed", message: "Check your internet connection...")
+
+                    case .responseUnsuccessful:
+                        self?.navigationController?.popViewController(animated: true)
+
+                        self?.displaySimpleAlertView(title: "Responce never came back", message: "Check your internet connection...")
+
+                    default: print("UNCAUGHT ERROR...")
+
+                    }
+                } else {
+                    
+                    // Assign the info gotten to the different varables
+                    self?.currentObject = characters[0]
+                    self?.currentObjects = characters
+                    self?.titleLabel.text = characters[0].name
+                   
+                    self?.setBiggest()
+                    self?.setSmallest()
+
+                    self?.refreshViews()
+                }
                 
             }
                 
@@ -223,33 +243,71 @@ class InformationViewController: UIViewController, UITableViewDataSource, UIPick
         case .starship:
             client.getVehicles() { [weak self] vehicles, error in
                 
-                // Assign the info gotten to the different varables
-                self?.currentObject = vehicles[0]
-                self?.currentObjects = vehicles
-                self?.titleLabel.text = vehicles[0].name
-                
-                self?.setBiggest()
-                self?.setSmallest()
-                
-                self?.refreshViews()
+               // Check for the error
+                if error != nil {
+
+                    switch error {
+                    case .requestFailed:
+                        self?.navigationController?.popViewController(animated: true)
+
+                        self?.displaySimpleAlertView(title: "Request Failed", message: "Check your internet connection...")
+
+                    case .responseUnsuccessful:
+                        self?.navigationController?.popViewController(animated: true)
+
+                        self?.displaySimpleAlertView(title: "Responce never came back", message: "Check your internet connection...")
+
+                    default: print("UNCAUGHT ERROR...")
+
+                    }
+                } else {
+                    
+                    // Assign the info gotten to the different varables
+                    self?.currentObject = vehicles[0]
+                    self?.currentObjects = vehicles
+                    self?.titleLabel.text = vehicles[0].name
+                   
+                    self?.setBiggest()
+                    self?.setSmallest()
+
+                    self?.refreshViews()
+                }
                 
             }
             
         case .vehicle:
             client.getStarships() { [weak self] starships, error in
                 
-                // Assign the info gotten to the different variables
-                self?.currentObject = starships[0]
-                self?.currentObjects = starships
-                self?.titleLabel.text = starships[0].name
-                
-                self?.setBiggest()
-                self?.setSmallest()
-                                
-                self?.refreshViews()
+               // Check for the error
+                if error != nil {
+
+                    switch error {
+                    case .requestFailed:
+                        self?.navigationController?.popViewController(animated: true)
+
+                        self?.displaySimpleAlertView(title: "Request Failed", message: "Check your internet connection...")
+
+                    case .responseUnsuccessful:
+                        self?.navigationController?.popViewController(animated: true)
+
+                        self?.displaySimpleAlertView(title: "Responce never came back", message: "Check your internet connection...")
+
+                    default: print("UNCAUGHT ERROR...")
+
+                    }
+                } else {
+                    
+                    // Assign the info gotten to the different varables
+                    self?.currentObject = starships[0]
+                    self?.currentObjects = starships
+                    self?.titleLabel.text = starships[0].name
+                   
+                    self?.setBiggest()
+                    self?.setSmallest()
+
+                    self?.refreshViews()
+                }
             }
-            
-           
         }
     }
 
@@ -292,5 +350,13 @@ class InformationViewController: UIViewController, UITableViewDataSource, UIPick
         informationTableView.reloadData()
         picker.delegate = self
         picker.dataSource = self
+    }
+    
+    func displaySimpleAlertView(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+        
+        UIApplication.shared.keyWindow?.rootViewController?.present(alertController, animated: true, completion: nil)
+        
     }
 }

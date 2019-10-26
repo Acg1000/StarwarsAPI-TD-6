@@ -206,11 +206,21 @@ class ConvertableUnitTableViewCell: UITableViewCell {
         if let ratioAsDouble = Double(ratio) {
             // Ratio is a double
             
-            if ratioAsDouble >= 0 {
+            if ratioAsDouble > 0 {
                 viewModel.setConversionRatio(to: ratioAsDouble)
 
                 
+            } else if (ratioAsDouble == 0) {
+                // Ratio is 0
+                
+                let alertController = UIAlertController(title: "Invalid Conversion Ratio", message: "Please enter a valid NON-Zero int.", preferredStyle: .alert)
+                alertController.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+                
+                UIApplication.shared.keyWindow?.rootViewController?.present(alertController, animated: true, completion: nil)
+                
             } else {
+                // Ratio is a nagative value
+                
                 let alertController = UIAlertController(title: "Invalid Conversion Ratio", message: "Please enter a valid NON-NEGATIVE int.", preferredStyle: .alert)
                 alertController.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
                 

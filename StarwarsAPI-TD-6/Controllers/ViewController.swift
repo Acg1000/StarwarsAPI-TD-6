@@ -34,7 +34,18 @@ class ViewController: UIViewController {
             // Set the title of the navigation controller on the next page
             informationViewController.navigationTitle = "Characters"
             
-            informationViewController.getData(for: .character)
+            do {
+                try informationViewController.getData(for: .character)
+
+            } catch StarwarsError.requestFailed {
+                displaySimpleAlertView(title: "Request Failed", message: "Check your internet connection...")
+                
+            } catch StarwarsError.responseUnsuccessful {
+                displaySimpleAlertView(title: "Responce never came back", message: "Check your internet connection...")
+                
+            } catch {
+                fatalError("\(error)")
+            }
             
             
         } else if segue.identifier == "vehicleSegue" {
@@ -42,7 +53,19 @@ class ViewController: UIViewController {
             // Set the title of the navigation controller on the next page
             informationViewController.navigationTitle = "Vehicles"
             
-            informationViewController.getData(for: .vehicle)
+            do {
+                try informationViewController.getData(for: .vehicle)
+
+            } catch StarwarsError.requestFailed {
+                displaySimpleAlertView(title: "Request Failed", message: "Check your internet connection...")
+                
+            } catch StarwarsError.responseUnsuccessful {
+                displaySimpleAlertView(title: "Responce never came back", message: "Check your internet connection...")
+                
+            } catch {
+                fatalError("\(error)")
+            }
+            
             
             
         } else if segue.identifier == "starshipSegue" {
@@ -50,9 +73,28 @@ class ViewController: UIViewController {
             // Set the title of the navigation controller on the next page
             informationViewController.navigationTitle = "Starships"
             
-            informationViewController.getData(for: .starship)
+            do {
+                try informationViewController.getData(for: .starship)
+
+            } catch StarwarsError.requestFailed {
+                displaySimpleAlertView(title: "Request Failed", message: "Check your internet connection...")
+                
+            } catch StarwarsError.responseUnsuccessful {
+                displaySimpleAlertView(title: "Responce never came back", message: "Check your internet connection...")
+                
+            } catch {
+                fatalError("\(error)")
+            }
             
         }
+    }
+    
+    func displaySimpleAlertView(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+        
+        UIApplication.shared.keyWindow?.rootViewController?.present(alertController, animated: true, completion: nil)
+        
     }
 }
 
