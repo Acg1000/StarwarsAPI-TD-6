@@ -33,58 +33,19 @@ class ViewController: UIViewController {
             
             // Set the title of the navigation controller on the next page
             informationViewController.navigationTitle = "Characters"
-            
-            do {
-                try informationViewController.getData(for: .character)
-
-            } catch StarwarsError.requestFailed {
-                displaySimpleAlertView(title: "Request Failed", message: "Check your internet connection...")
-                
-            } catch StarwarsError.responseUnsuccessful {
-                displaySimpleAlertView(title: "Responce never came back", message: "Check your internet connection...")
-                
-            } catch {
-                fatalError("\(error)")
-            }
-            
+            informationViewController.getData(for: .character)
             
         } else if segue.identifier == "vehicleSegue" {
             
             // Set the title of the navigation controller on the next page
             informationViewController.navigationTitle = "Vehicles"
-            
-            do {
-                try informationViewController.getData(for: .vehicle)
-
-            } catch StarwarsError.requestFailed {
-                displaySimpleAlertView(title: "Request Failed", message: "Check your internet connection...")
-                
-            } catch StarwarsError.responseUnsuccessful {
-                displaySimpleAlertView(title: "Responce never came back", message: "Check your internet connection...")
-                
-            } catch {
-                fatalError("\(error)")
-            }
-            
-            
+            informationViewController.getData(for: .vehicle)
             
         } else if segue.identifier == "starshipSegue" {
             
             // Set the title of the navigation controller on the next page
             informationViewController.navigationTitle = "Starships"
-            
-            do {
-                try informationViewController.getData(for: .starship)
-
-            } catch StarwarsError.requestFailed {
-                displaySimpleAlertView(title: "Request Failed", message: "Check your internet connection...")
-                
-            } catch StarwarsError.responseUnsuccessful {
-                displaySimpleAlertView(title: "Responce never came back", message: "Check your internet connection...")
-                
-            } catch {
-                fatalError("\(error)")
-            }
+            informationViewController.getData(for: .vehicle)
             
         }
     }
