@@ -9,29 +9,29 @@
 
 import Foundation
 
-class Planet {
+class Planet: Codable {
     let name: String
     
-    init(name: String) {
-        self.name = name
+    init() {
+        self.name = ""
 
     }
 }
 
 // MARK: JSON init
 
-extension Planet {
-    convenience init?(json: [String: Any]) {
-        
-        struct Key {
-            static let name = "name"
-        
-        }
-        
-        guard let nameValue = json[Key.name] as? String
-                else { return nil }
-        
-        self.init(name: nameValue)
-        
-    }
-}
+//extension Planet {
+//    convenience init?(json: [String: Any]) {
+//
+//        struct Key {
+//            static let name = "name"
+//
+//        }
+//
+//        guard let nameValue = json[Key.name] as? String
+//                else { return nil }
+//
+//        self.init(name: nameValue)
+//
+//    }
+//}

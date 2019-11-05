@@ -9,53 +9,24 @@
 
 import Foundation
 
-class Starship {
+class Starship: Codable {
     let name: String
     let model: String
     let starshipClass: String
     let manufacturer: String
     let costInCredits: String
-    let lengthInCM: String
+    let length: String
     let crew: String
     
-    init(name: String, model: String, starshipClass: String, manufacturer: String, costInCredits: String, length: String, crew: String) {
-        self.name = name
-        self.model = model
-        self.starshipClass = starshipClass
-        self.manufacturer = manufacturer
-        self.costInCredits = costInCredits
-        self.lengthInCM = length
-        self.crew = crew
+    init() {
+        self.name = ""
+        self.model = ""
+        self.starshipClass = ""
+        self.manufacturer = ""
+        self.costInCredits = ""
+        self.length = ""
+        self.crew = ""
         
-    }
-}
-
-// MARK: Json init
-
-extension Starship {
-    convenience init?(json: [String: Any]) {
-        
-        struct Key {
-            static let name = "name"
-            static let model = "model"
-            static let starshipClass = "starship_class"
-            static let manufacturer = "manufacturer"
-            static let costInCredits = "cost_in_credits"
-            static let length = "length"
-            static let crew = "crew"
-            
-        }
-        
-        guard let nameValue = json[Key.name] as? String,
-            let modelValue = json[Key.model] as? String,
-            let starshipClassValue = json[Key.starshipClass] as? String,
-            let manufacturerValue = json[Key.manufacturer] as? String,
-            let costInCreditsValue = json[Key.costInCredits] as? String,
-            let lengthValue = json[Key.length] as? String,
-            let crewValue = json[Key.crew] as? String
-            else { return nil }
-        
-        self.init(name: nameValue, model: modelValue, starshipClass: starshipClassValue, manufacturer: manufacturerValue, costInCredits: costInCreditsValue, length: lengthValue, crew: crewValue)
     }
 }
 
@@ -67,7 +38,7 @@ extension Starship: Object {
     }
     
     var sizeAttribute: Double {
-        return Double(lengthInCM)!
+        return Double(length)!
     }
     
     var type: StarwarsResource {
@@ -78,7 +49,7 @@ extension Starship: Object {
         return manufacturer
     }
     
-    var arrtibute2: String {
+    var attribute2: String {
         get {
             return costInCredits
         } set {
@@ -87,7 +58,7 @@ extension Starship: Object {
     }
     
     var attribute3: String {
-        return lengthInCM
+        return length
     }
     
     var attribute4: String {

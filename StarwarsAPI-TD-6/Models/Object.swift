@@ -16,7 +16,7 @@ protocol Object {
     var sizeAttribute: Double { get }
     
     var attribute1: String { get }
-    var arrtibute2: String { get set }
+    var attribute2: String { get set }
     var attribute3: String { get }
     var attribute4: String { get }
     var attribute5: String { get }

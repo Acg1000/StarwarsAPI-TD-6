@@ -17,7 +17,7 @@ class InformationViewController: UIViewController, UITableViewDataSource, UIPick
     
     // character varable stores the character currently on display
     lazy var currentObject: Object = {
-        return Character(name: "", birthYear: "", eyeColor: "", hairColor: "", height: 0, homeworld: "", url: "")
+        return Character()
     }()
     
     
@@ -98,7 +98,7 @@ class InformationViewController: UIViewController, UITableViewDataSource, UIPick
                     return normalAttributeCell
                     
                 case 1:
-                    let viewModel = NormalCellViewModel(title: "Home", item: currentObject.arrtibute2)
+                    let viewModel = NormalCellViewModel(title: "Home", item: currentObject.attribute2)
                     normalAttributeCell.configure(with: viewModel)
                     
                     return normalAttributeCell
@@ -136,7 +136,7 @@ class InformationViewController: UIViewController, UITableViewDataSource, UIPick
                     
                 case 1:
                     
-                    let viewModel = ConvertableCellViewModel(title: "Cost", item: Double(currentObject.arrtibute2) ?? 0, unit: .credits, convertedUnit: .USD)
+                    let viewModel = ConvertableCellViewModel(title: "Cost", item: Double(currentObject.attribute2) ?? 0, unit: .credits, convertedUnit: .USD)
                     convertableAttributeCell.configure(viewModel: viewModel)
                     
                     return convertableAttributeCell
@@ -240,8 +240,10 @@ class InformationViewController: UIViewController, UITableViewDataSource, UIPick
             }
                 
             
-        case .starship:
+        case .vehicle:
             client.getVehicles() { [weak self] vehicles, error in
+                
+                print("VEHICLE")
                 
                // Check for the error
                 if error != nil {
@@ -275,8 +277,10 @@ class InformationViewController: UIViewController, UITableViewDataSource, UIPick
                 
             }
             
-        case .vehicle:
+        case .starship:
             client.getStarships() { [weak self] starships, error in
+                
+                print("STARSHIP")
                 
                // Check for the error
                 if error != nil {

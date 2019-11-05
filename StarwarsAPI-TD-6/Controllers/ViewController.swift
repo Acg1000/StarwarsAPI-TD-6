@@ -45,7 +45,7 @@ class ViewController: UIViewController {
             
             // Set the title of the navigation controller on the next page
             informationViewController.navigationTitle = "Starships"
-            informationViewController.getData(for: .vehicle)
+            informationViewController.getData(for: .starship)
             
         }
     }
