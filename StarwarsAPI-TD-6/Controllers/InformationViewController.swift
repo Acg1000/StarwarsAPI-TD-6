@@ -89,6 +89,7 @@ class InformationViewController: UIViewController, UITableViewDataSource, UIPick
             // Switch on the current row of the tableview
             // The title of every row is already predetermined and all we do here is take the title we want to assign and the value and create a ViewModel instance for that combination
             // We know that the displayed attributes for the Character are different from the ones for the Vehicles and Starships so we are displaying different information and views depending on the type.
+            
             switch indexPath.row {
                 case 0:
                     
@@ -242,9 +243,7 @@ class InformationViewController: UIViewController, UITableViewDataSource, UIPick
             
         case .vehicle:
             client.getVehicles() { [weak self] vehicles, error in
-                
-                print("VEHICLE")
-                
+                                
                // Check for the error
                 if error != nil {
 
@@ -279,9 +278,7 @@ class InformationViewController: UIViewController, UITableViewDataSource, UIPick
             
         case .starship:
             client.getStarships() { [weak self] starships, error in
-                
-                print("STARSHIP")
-                
+                                
                // Check for the error
                 if error != nil {
 

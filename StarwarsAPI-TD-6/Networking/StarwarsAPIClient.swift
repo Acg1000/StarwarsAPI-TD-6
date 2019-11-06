@@ -18,27 +18,28 @@ class StarwarsAPIClient {
     // get characters method
     func getCharacters(completion: @escaping ([Character], StarwarsError?) -> Void) {
         
-        // Create the endpoint and pass nil because we want all the characters
+        // Create the endpoint and pass nil because we want all the characters along with forming the decoder.
         let endpoint = Starwars.character(id: nil)
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
-
+        
+        
+        
         // Call the preform request function with the URL / endpoint that wejust created
         preformRequest(with: endpoint) { json, error in
             
-            // When we get results back...
+            // if the results from the call are nill, pass the error through
             guard let json = json else {
-                // If the json is nill pass an error through the completion handler
                 completion([], error)
                 return
             }
             
-            
             do {
-                
+                // Try to decode the JSON to fit our result Type
                 let results = try decoder.decode(Result<Character>.self, from: json)
                 let characters = results.results
                 
+                // Assign the planets from the link each character has
                 for character in characters {
                     self.lookupPlanet(withURL: character.attribute2) { planet, error in
                         print(character.attribute2)
@@ -63,24 +64,20 @@ class StarwarsAPIClient {
     
     // MARK: getVehicles
     
-    // get vehicles method
+    // get vehicles method (REFERENCE CHARACTER FOR COMMENTS)
     func getVehicles(completion: @escaping ([Vehicle], StarwarsError?) -> Void) {
         
-        // Create the endpoint and pass nil because we want all the characters
         let endpoint = Starwars.vehicles(id: nil)
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
 
-        // Call the preform request function with the URL / endpoint that wejust created
         preformRequest(with: endpoint) { json, error in
             
-            // When we get results back, check to see if the json is present
             guard let json = json else {
                 completion([], error)
                 return
             }
             
-            // If it is then try to decode it to the Result Data Structure
             do {
                 
                 let results = try decoder.decode(Result<Vehicle>.self, from: json)
@@ -99,24 +96,20 @@ class StarwarsAPIClient {
     
     // MARK: getStarships
     
-    // get starships method
+    // get starships method (CHECK CHARACTERS FOR COMMENTS)
     func getStarships(completion: @escaping ([Starship], StarwarsError?) -> Void) {
         
-        // Create the endpoint and pass nil because we want all the characters
         let endpoint = Starwars.starships(id: nil)
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
 
-        // Call the preform request function with the URL / endpoint that wejust created
         preformRequest(with: endpoint) { json, error in
             
-            // When we get results back, check to see if the json is present
             guard let json = json else {
                 completion([], error)
                 return
             }
             
-            // If it is then try to decode it to the Result Data Structure
             do {
                 
                 let results = try decoder.decode(Result<Starship>.self, from: json)
@@ -139,16 +132,18 @@ class StarwarsAPIClient {
     func lookupPlanet(withURL url: String, completion: @escaping (Planet, StarwarsError?) -> Void) {
         var id: Int = 0
         
-        for char in url {
-            if char.isNumber {
-                if let number = Int(String(char)) {
-                    print(number)
-                    id = number
-
-                }
-            }
+        // get all ints between the last two slashes
+        let substrings = url.split(separator: "/", maxSplits: 100, omittingEmptySubsequences: false)
+        
+        print(substrings)
+        let idString = String(substrings[substrings.count - 2])
+        
+        print("ID: \(idString)")
+        if let idInt = Int(idString) {
+            id = idInt
         }
         
+        // ...and pass that through the API call as a number.
         let endpoint = Starwars.planets(id: id)
         print("Looking up planet: \(endpoint.request)")
 
@@ -156,6 +151,7 @@ class StarwarsAPIClient {
             
             let decoder = JSONDecoder()
 
+            // if the result does not exist, then create a blank planet type
             guard let result = result else {
                 completion(Planet(), error)
                 return

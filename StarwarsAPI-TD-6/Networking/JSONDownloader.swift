@@ -20,8 +20,7 @@ class JSONDownloader {
         self.init(configuration: .default)
     }
     
-    typealias JSON = Data
-    typealias JSONTaskCompletionHandler = (JSON?, StarwarsError?) -> Void
+    typealias JSONTaskCompletionHandler = (Data?, StarwarsError?) -> Void
     
     func jsonTask(with request: URLRequest, completionHandler completion: @escaping JSONTaskCompletionHandler) -> URLSessionDataTask {
         let task = session.dataTask(with: request) { data, response, error in
@@ -31,19 +30,13 @@ class JSONDownloader {
                 return
             }
             
+            // Depending on the status code...
             if httpResponse.statusCode == 200 {
                 if let data = data {
-                    do {
-//                        let jsonString = String(decoding: data, as: UTF8.self)
-//                        print(jsonString)
-//                        let json = jsonString.data(using: .utf8)
-                        
-                        let json = data
-                        
-                        completion(json, nil)
-                    } catch {
-                        completion(nil, .jsonConversionFailure)
-                    }
+                    
+                    let json = data
+                    completion(json, nil)
+                    
                 } else {
                     completion(nil, .invalidData)
                 }
