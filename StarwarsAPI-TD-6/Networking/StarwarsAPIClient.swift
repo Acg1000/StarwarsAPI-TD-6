@@ -227,7 +227,6 @@ class StarwarsAPIClient {
             // Create the task in the background...
             DispatchQueue.main.async {
                 guard let json = json else {
-//                    fatalError("\(error)")
                     completion(nil, error)
                     return
                 }
@@ -247,7 +246,6 @@ class StarwarsAPIClient {
             // Create the task in the background
             DispatchQueue.main.async {
                 guard let json = json else {
-//                    fatalError("Single Request Error... \(error)")
                     completion(nil, error)
                     return
                 }
