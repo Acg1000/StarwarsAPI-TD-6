@@ -55,9 +55,21 @@ class StarwarsAPIClient {
                 completion(characters, nil)
                 
                 
+            } catch DecodingError.dataCorrupted {
+                completion([], StarwarsError.jsonConversionFailure)
+                
+            } catch DecodingError.keyNotFound(let key) {
+                completion([], StarwarsError.jsonParsingFailure(messege: "key \(key) was not found..."))
+                
+            } catch DecodingError.typeMismatch {
+                completion([], StarwarsError.jsonConversionFailure)
+                
+            } catch DecodingError.valueNotFound {
+                completion([], StarwarsError.jsonConversionFailure)
+                
             } catch {
                 print("Error with Decoded Character Results \(error)")
-                fatalError("\(error)")
+                completion([], StarwarsError.jsonParsingFailure(messege: "Somthing went really wrong"))
             }
         }
     }
@@ -87,9 +99,21 @@ class StarwarsAPIClient {
                 completion(vehicles, nil)
                 
                 
+            } catch DecodingError.dataCorrupted {
+                completion([], StarwarsError.jsonConversionFailure)
+                
+            } catch DecodingError.keyNotFound(let key) {
+                completion([], StarwarsError.jsonParsingFailure(messege: "key \(key) was not found..."))
+                
+            } catch DecodingError.typeMismatch {
+                completion([], StarwarsError.jsonConversionFailure)
+                
+            } catch DecodingError.valueNotFound {
+                completion([], StarwarsError.jsonConversionFailure)
+                
             } catch {
                 print("Error with Decoded Character Results \(error)")
-                fatalError("\(error)")
+                completion([], StarwarsError.jsonParsingFailure(messege: "Somthing went really wrong"))
             }
         }
     }
@@ -119,9 +143,21 @@ class StarwarsAPIClient {
                 completion(starships, nil)
                 
                 
+            } catch DecodingError.dataCorrupted {
+                completion([], StarwarsError.jsonConversionFailure)
+                
+            } catch DecodingError.keyNotFound(let key) {
+                completion([], StarwarsError.jsonParsingFailure(messege: "key \(key) was not found..."))
+                
+            } catch DecodingError.typeMismatch {
+                completion([], StarwarsError.jsonConversionFailure)
+                
+            } catch DecodingError.valueNotFound {
+                completion([], StarwarsError.jsonConversionFailure)
+                
             } catch {
                 print("Error with Decoded Character Results \(error)")
-                fatalError("\(error)")
+                completion([], StarwarsError.jsonParsingFailure(messege: "Somthing went really wrong"))
             }
         }
     }
@@ -162,10 +198,21 @@ class StarwarsAPIClient {
 
                 completion(planet, nil)
 
-            } catch {
+            } catch DecodingError.dataCorrupted {
+                completion(Planet(), StarwarsError.jsonConversionFailure)
                 
-                print("Error with Decoded Planet Results \(error)")
-                fatalError("\(error)")
+            } catch DecodingError.keyNotFound(let key) {
+                completion(Planet(), StarwarsError.jsonParsingFailure(messege: "key \(key) was not found..."))
+                
+            } catch DecodingError.typeMismatch {
+                completion(Planet(), StarwarsError.jsonConversionFailure)
+                
+            } catch DecodingError.valueNotFound {
+                completion(Planet(), StarwarsError.jsonConversionFailure)
+                
+            } catch {
+                print("Error with Decoded Character Results \(error)")
+                completion(Planet(), StarwarsError.jsonParsingFailure(messege: "Somthing went really wrong"))
             }
         }
     }
